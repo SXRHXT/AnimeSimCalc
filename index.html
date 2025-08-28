@@ -1,73 +1,134 @@
 <style>
+  /* ======================
+     CALCULATOR CARD STYLES
+     ====================== */
+  /* Inputs, selects, textareas */
+  .calculator-card input,
+  .calculator-card select,
+  .calculator-card textarea {
+    background: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    line-height: 1.4;
+    box-sizing: border-box;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.6),
+                0 0 10px rgba(255, 255, 255, 0.4);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  }
+  .calculator-card input:hover, .calculator-card select:hover, .calculator-card textarea:hover,
+  .calculator-card input:focus, .calculator-card select:focus, .calculator-card textarea:focus {
+    background: #333333;
+    border-color: #42e69588;
+    box-shadow: 0 0 8px rgba(26, 188, 156, 0.6),
+                0 0 15px rgba(26, 188, 156, 0.4);
+    outline: none;
+  }
+  /* Remove spinner arrows in time & number inputs */
+  .calculator-card input[type="time"]::-webkit-inner-spin-button,
+  .calculator-card input[type="time"]::-webkit-clear-button,
+  .calculator-card input[type="number"]::-webkit-inner-spin-button,
+  .calculator-card input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* Checkbox styling */
+  .calculator-card input[type="checkbox"] {
+    appearance: none;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 8px;
+    background-color: #fff;
+    width: 10px;
+    height: 10px;
+    transition: all 0.2s ease;
+    display: inline-block;
+  }
+  .calculator-card input[type="checkbox"]:checked {
+    background-color: #4cbd84;
+    border-color: #42e695;
+  }
+  .calculator-card input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 0px;
+    width: 6px;
+    height: 12px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  /* Inputs in calculator cards lighter than card */
+  .calculator-card .form-input,
+  .calculator-card .form-select {
+    background: #23232e !important;
+    color: #fff;
+    border: 1px solid #35354a;
+  }
+  /* Checkbox-labels: white, not bold */
+  .calculator-card label.checkbox-label {
+    font-weight: normal !important;
+    color: #fff !important;
+  }
+  /* Less space between label and input/select */
+  .calculator-card .form-group label.form-label + .form-input,
+  .calculator-card .form-group label.form-label + .form-select,
+  .calculator-card .form-group label.checkbox-label + .form-input,
+  .calculator-card .form-group label.checkbox-label + .form-select {
+    margin-top: -2px !important;
+  }
+  .calculator-card .form-group label.form-label,
+  .calculator-card .form-group label.checkbox-label {
+    margin-bottom: -2px !important;
+  }
+  /* Consistent spacing for label+input/select groups */
+  .calculator-card .form-group {
+    margin-bottom: 18px;
+  }
+  .calculator-card label.form-label,
+  .calculator-card label.checkbox-label {
+    display: block;
+    margin-bottom: 7px;
+  }
+  /* Force white, bold, Oxanium labels above inputs */
+  .calculator-card label.form-label {
+    color: #fff !important;
+    font-weight: bold !important;
+    font-family: 'Oxanium', sans-serif !important;
+    letter-spacing: 0.01em;
+    font-size: 1.08em;
+  }
+  .calculator-card label.checkbox-label {
+    color: #fff !important;
+    font-weight: normal !important;
+    font-family: 'Oxanium', sans-serif !important;
+    letter-spacing: 0.01em;
+    font-size: 1.08em;
+  }
 
-  /* Calculator input, select, textarea: white glow, green on hover/focus */
-.calculator-card input,
-.calculator-card select,
-.calculator-card textarea {
-  background: #2a2a2a;
-  color: #ffffff;
-  border: 1px solid #ffffff;
-  border-radius: 8px;
-  padding: 0.6rem 1rem;
-  font-size: 1rem;
-  line-height: 1.4;
-  box-sizing: border-box;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.6),
-              0 0 10px rgba(255, 255, 255, 0.4);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-}
+  /* ======================
+     CALCULATOR CARD LAYOUT
+     ====================== */
+  .calculator-card,
+  .gain-card,
+  .goal-card,
+  .coin-card {
+    min-height: 605px !important;
+    min-width: 420px !important;
+    max-width: 500px !important;
+    height: 100%;
+    box-sizing: border-box;
+  }
 
-.calculator-card input:hover, .calculator-card select:hover, .calculator-card textarea:hover,
-.calculator-card input:focus, .calculator-card select:focus, .calculator-card textarea:focus {
-  background: #333333;
-  border-color: #42e69588;
-  box-shadow: 0 0 8px rgba(26, 188, 156, 0.6),
-              0 0 15px rgba(26, 188, 156, 0.4);
-  outline: none;
-}
-
-/* Remove spinner arrows in time & number inputs */
-.calculator-card input[type="time"]::-webkit-inner-spin-button,
-.calculator-card input[type="time"]::-webkit-clear-button,
-.calculator-card input[type="number"]::-webkit-inner-spin-button,
-.calculator-card input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-.calculator-card input[type="checkbox"] {
-  appearance: none;
-  border: 2px solid #aaa;
-  border-radius: 4px;
-  position: relative;
-  cursor: pointer;
-  vertical-align: middle;
-  margin-right: 8px;
-  background-color: #fff;
-  width: 10px;
-  height: 10px;
-  transition: all 0.2s ease;
-  display: inline-block;
-}
-
-.calculator-card input[type="checkbox"]:checked {
-  background-color: #4cbd84;
-  border-color: #42e695;
-}
-
-.calculator-card input[type="checkbox"]:checked::after {
-  content: "";
-  position: absolute;
-  left: 12px;
-  top: 0px;
-  width: 6px;
-  height: 12px;
-  border: solid #fff;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-</style>
-<style>
-  /* Trading card panelen en inputs lichter grijs */
+  /* ======================
+     TRADING CARD STYLES
+     ====================== */
   .trading-card, .trading-card .trade-panel, .trading-card .companion-item, .trading-card .modal-content {
     background: #222225 !important;
   }
@@ -79,7 +140,6 @@
     border: 1px solid #1a1a1a;
     transition: background 0.2s
   }
-
   .trading-card .add-companion-btn {
     background: #23232e !important;
     transition: background 0.2s;
@@ -88,10 +148,7 @@
   .trading-card .add-companion-btn:active {
     background: #353545 !important;
   }
-</style>
-<style>
-  .result.show { display:block !important; }
-  /* Trading card gebruikt Oxanium en header kleuren */
+  /* Trading card font and header */
   .trading-card, .trading-card * {
     font-family: 'Oxanium', sans-serif !important;
     color: #fff !important;
@@ -108,83 +165,13 @@
     letter-spacing: 0.5px;
     text-align: center;
   }
-</style>
-<style>
+
+  /* ======================
+     RESULT/UTILITY CLASSES
+     ====================== */
   .result { display: none; }
   .result.active { display: block; }
-  /* Show class used by JS */
-  .result.show { display:block; }
-
-</style>
-<style>
-  /* Inputs in calculator cards lichtere grijs dan de kaart zelf */
-  .calculator-card .form-input,
-  .calculator-card .form-select {
-    background: #23232e !important;
-    color: #fff;
-    border: 1px solid #35354a;
-  }
-</style>
-<style>
-  /* Alle calculator cards gelijke hoogte */
-  .calculator-card,
-  .gain-card,
-  .goal-card,
-  .coin-card {
-    min-height: 590px !important;
-    min-width: 420px !important;
-    max-width: 500px !important;
-    height: 100%;
-    box-sizing: border-box;
-  }
-</style>
-<style>
-  /* Checkbox-labels in calculator cards: wit, niet bold */
-  .calculator-card label.checkbox-label {
-    font-weight: normal !important;
-    color: #fff !important;
-  }
-</style>
-<style>
-  /* Minder ruimte tussen label en input/select direct eronder in calculator cards */
-  .calculator-card .form-group label.form-label + .form-input,
-  .calculator-card .form-group label.form-label + .form-select,
-  .calculator-card .form-group label.checkbox-label + .form-input,
-  .calculator-card .form-group label.checkbox-label + .form-select {
-    margin-top: -2px !important;
-  }
-  .calculator-card .form-group label.form-label,
-  .calculator-card .form-group label.checkbox-label {
-    margin-bottom: -2px !important;
-  }
-</style>
-<style>
-  /* Consistente spacing voor label+input/select groepen in calculator cards */
-  .calculator-card .form-group {
-    margin-bottom: 18px;
-  }
-  .calculator-card label.form-label,
-  .calculator-card label.checkbox-label {
-    display: block;
-    margin-bottom: 7px;
-  }
-</style>
-<style>
-  /* Forceer witte, bold, Oxanium labels boven inputs in cards */
-  .calculator-card label.form-label {
-    color: #fff !important;
-    font-weight: bold !important;
-    font-family: 'Oxanium', sans-serif !important;
-    letter-spacing: 0.01em;
-    font-size: 1.08em;
-  }
-  .calculator-card label.checkbox-label {
-    color: #fff !important;
-    font-weight: normal !important;
-    font-family: 'Oxanium', sans-serif !important;
-    letter-spacing: 0.01em;
-    font-size: 1.08em;
-  }
+  .result.show { display:block !important; }
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -1608,7 +1595,9 @@
         strength: 55,
         energy: 28,
         defense: 36,
-        sword: 55
+        sword: 55,
+        speed: 39,
+        jump: 39
       };
       const companionTicksPerMinute = 10;
 
@@ -2344,13 +2333,16 @@
       populateItemGrid();
 
       // Event Listeners
-  document.getElementById("calculateBtn").addEventListener("click", calculateGains);
-  document.getElementById("calculateCoinsBtn").addEventListener("click", calculateCoins);
-      
-      document.getElementById("saveProfileBtn").addEventListener("click", saveProfile);
-      document.getElementById("loadProfileBtn").addEventListener("click", loadProfile);
-      document.getElementById("saveGoalProfileBtn").addEventListener("click", saveGoalProfile);
-      document.getElementById("loadGoalProfileBtn").addEventListener("click", loadGoalProfile);
+      document.getElementById("calculateBtn").addEventListener("click", calculateGains);
+      document.getElementById("calculateCoinsBtn").addEventListener("click", calculateCoins);
+
+      // Prevent all input/textarea fields from being auto-filled or auto-completed
+      document.querySelectorAll('input, textarea').forEach(function(el) {
+        el.setAttribute('autocomplete', 'off');
+        el.setAttribute('autocorrect', 'off');
+        el.setAttribute('autocapitalize', 'off');
+        el.setAttribute('spellcheck', 'false');
+      });
       
       // Enter key support
       const inputs = [
@@ -2518,6 +2510,15 @@
   transform: scale(1.12);
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
+
+/*
+git add .
+git commit -m ""
+git push
+*/
+
 </style>
 </body>
 </html>
+
+
