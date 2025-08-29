@@ -244,15 +244,29 @@
     <div class="tierlist-card active" id="tierlist-companions">
       <div class="tierlist-title">Companions Tier List</div>
       <div class="tierlist-rows">
-        <div class="tier-labels">
-          <div class="tier-label tier-s"><span>S</span></div>
-          <div class="tier-label tier-a"><span>A</span></div>
-          <div class="tier-label tier-b"><span>B</span></div>
-          <div class="tier-label tier-c"><span>C</span></div>
-          <div class="tier-label tier-d"><span>D</span></div>
-        </div>
-        <div class="tier-cards">
-          <!-- Your companion cards go here, one row per tier if you want -->
+        <div class="tierlist-table">
+          <div class="tier-row">
+            <div class="tier-label tier-s"><span>S</span></div>
+            <img src="images/better_world.png" alt="Better World" class="tier-image">
+            <img src="images/brobro.png" alt="Brobro" class="tier-image">
+            <img src="images/demon_galo.png" alt="Demon Galo" class="tier-image">
+          </div>
+          <div class="tier-row">
+            <div class="tier-label tier-a"><span>A</span></div>
+            <!-- Voeg hier een afbeelding of content toe voor A-tier als gewenst -->
+          </div>
+          <div class="tier-row">
+            <div class="tier-label tier-b"><span>B</span></div>
+            <!-- Voeg hier een afbeelding of content toe voor B-tier als gewenst -->
+          </div>
+          <div class="tier-row">
+            <div class="tier-label tier-c"><span>C</span></div>
+            <!-- Voeg hier een afbeelding of content toe voor C-tier als gewenst -->
+          </div>
+          <div class="tier-row">
+            <div class="tier-label tier-d"><span>D</span></div>
+            <!-- Voeg hier een afbeelding of content toe voor D-tier als gewenst -->
+          </div>
         </div>
       </div>
     </div>
@@ -311,6 +325,23 @@
   .tier-labels .tier-label:first-child {
     margin-top: 18px;
   }
+
+    .tierlist-table {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.7rem;
+      align-items: flex-start;
+      margin-left: 0;
+      margin-top: 18px;
+    }
+    .tier-row {
+      display: flex;
+      align-items: center;
+      min-height: 110px;
+      gap: 0.7rem;
+      margin-bottom: 0;
+    }
 
   .tier-label {
     width: 110px;
@@ -418,6 +449,24 @@
   gap: 1.5rem;
   width: 100%;
   margin-left: 0;
+  }
+
+  .tier-row {
+    display: flex;
+    align-items: center;
+    min-height: 110px;
+    margin-bottom: 0;
+    gap: 0.7rem;
+  }
+
+  .tier-image {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 0 12px #000a;
+    border: 2.5px solid #fff2;
+    background: #18181f;
   }
   </style>
   <script>
