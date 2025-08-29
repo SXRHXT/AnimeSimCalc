@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime Simulator Tier Lists</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #111;
+      --bg-card: #23232e;
+      --primary: #7e22ce;
+      --secondary: #42e695;
+      --primary-glow: #ff6ec4;
+      --text-main: #fff;
+      --text-secondary: #bdbdbd;
+      --border: #35354a;
+    }
+    body {
+      font-family: 'Oxanium', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .header-card {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      height: 180px;
+      margin-bottom: 2.3rem;
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem 1.5rem;
+      z-index: 2;
+      background: #1c1c1c;
+    }
+    .header-card::before {
+      content: '';
+      position: absolute;
+      top: -350%;
+      left: -350%;
+      width: 800%;
+      height: 800%;
+      border-radius: 50%;
+      background: conic-gradient(
+        #ff6ec4,
+        #7873f5,
+        #42e695,
+        #ff6ec4
+      );
+      z-index: 0;
+      animation: rotateGradient 6s linear infinite;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+    .header-card::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 20px;
+      background: #1c1c1c;
+      z-index: 1;
+    }
+    .header-card > * {
+      position: relative;
+      z-index: 3;
+    }
+    @keyframes rotateGradient {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .header-title {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #fff !important;
+      text-shadow: 0 0 15px #ff6ec4, 0 0 25px #7873f5, 0 0 35px #42e695;
+      margin: 0 0 0.5rem 0;
+      padding-top: 0.2rem;
+      font-family: 'Oxanium', sans-serif;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+    .header-buttons {
+      margin-top: 0.2rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .card-btn {
+      background: rgba(20, 20, 30, 0.8);
+      border-radius: 25px;
+      border: 3px solid transparent;
+      color: #fff;
+      font-family: 'Oxanium', sans-serif;
+      font-size: 1.3rem;
+      font-weight: bold;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      box-shadow: 0 0 0 4px rgba(66,230,149,0), 0 0 18px rgba(66,230,149,0), 0 0 36px rgba(66,230,149,0);
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+      margin-bottom: 0;
+    }
+    .card-btn:hover, .card-btn.active {
+      background: rgba(20, 20, 30, 0.8);
+      color: #fff;
+      border-color: #42e695;
+      box-shadow: 0 0 0 4px #42e69544, 0 0 18px #42e69588, 0 0 36px #42e69544;
+      transform: scale(1.12);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .tierlist-container {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 2rem;
+    }
+    .tierlist-card {
+      position: relative;
+      background: var(--bg-card);
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7), 0 0 30px rgba(255,110,196,0.3), 0 0 30px rgba(120,115,245,0.3), 0 0 30px rgba(66,230,149,0.3);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      width: 100%;
+      max-width: 900px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.5s ease-out;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .tierlist-card.active {
+      display: flex;
+    }
+    .tierlist-card::before {
+      content: '';
+      position: absolute;
+      top: -350%;
+      left: -350%;
+      width: 800%;
+      height: 800%;
+      border-radius: 50%;
+      background: conic-gradient(
+        #ff6ec4,
+        #7873f5,
+        #42e695,
+        #ff6ec4
+      );
+      z-index: 0;
+      animation: rotateGradient 6s linear infinite;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+    .tierlist-card::after {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border-radius: 20px;
+      background: var(--bg-card);
+      z-index: 1;
+    }
+    .tierlist-card > * {
+      position: relative;
+      z-index: 2;
+    }
+    .tierlist-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 1.2rem;
+      text-shadow: 0 0 15px #ff6ec4, 0 0 25px #7873f5, 0 0 35px #42e695;
+      text-align: center;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+            .btn {
+          background: linear-gradient(135deg, #42e695, #42e695);
+          color: #111;
+          font-size: 0.9rem;
+          font-weight: 700;
+          padding: 0.7rem;
+          border: 2px solid #42e695;
+          border-radius: 0.6rem;
+          cursor: pointer;
+          width: 100%;
+          transition: all 0.3s ease;
+          font-family: 'Oxanium', sans-serif;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.4rem;
+          box-shadow: 0 0 0 0 #42e695;
+        }
+        .side-nav-btn {
+          background: var(--bg-element);
+          color: var(--text-main);
+          border: 1px solid var(--border);
+          border-radius: 0.6rem;
+          padding: 0.4rem 0.6rem;
+          cursor: pointer;
+          font-size: 2.2rem;
+          transition: all 0.2s;
+          font-family: 'Oxanium', sans-serif;
+          margin-bottom: 0.5rem;
+          width: 100%;
+          justify-content: flex-start;
+        }
+        .side-nav-btn:hover {
+          background: linear-gradient(135deg, #7e22ce, #42e695);
+          color: #fff;
+          border-color: #42e695;
+          box-shadow: 0 0 0 4px #42e69544, 0 0 18px #42e69588, 0 0 36px #42e69544;
+          transform: scale(1.12);
+          transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+        }
+  </style>
+</head>
+<body>
+  <div class="header-card">
+    <h1 class="header-title">Anime Simulator Tier Lists</h1>
+    <div class="header-buttons">
+      <button class="card-btn active" id="btn-companions">Companions</button>
+      <button class="card-btn" id="btn-auras">Auras</button>
+      <button class="card-btn" id="btn-others">Other</button>
+    </div>
+  </div>
+  <div class="tierlist-container">
+    <div class="tierlist-card active" id="tierlist-companions">
+      <div class="tierlist-title">Companions Tier List</div>
+      <div class="tierlist-rows">
+        <div class="tier-labels">
+          <div class="tier-label tier-s"><span>S</span></div>
+          <div class="tier-label tier-a"><span>A</span></div>
+          <div class="tier-label tier-b"><span>B</span></div>
+          <div class="tier-label tier-c"><span>C</span></div>
+          <div class="tier-label tier-d"><span>D</span></div>
+        </div>
+        <div class="tier-cards">
+          <!-- Your companion cards go here, one row per tier if you want -->
+        </div>
+      </div>
+    </div>
+    <div class="tierlist-card" id="tierlist-auras">
+      <div class="tierlist-title">Auras Tier List</div>
+      <div class="tierlist-rows">
+        <div class="tier-labels">
+          <div class="tier-label tier-s"><span>S</span></div>
+          <div class="tier-label tier-a"><span>A</span></div>
+          <div class="tier-label tier-b"><span>B</span></div>
+          <div class="tier-label tier-c"><span>C</span></div>
+          <div class="tier-label tier-d"><span>D</span></div>
+        </div>
+        <div class="tier-cards">
+          <!-- Your aura cards go here, one row per tier if you want -->
+        </div>
+      </div>
+    </div>
+    <div class="tierlist-card" id="tierlist-others">
+      <div class="tierlist-title">Other Tier List</div>
+      <div class="tierlist-rows">
+        <div class="tier-labels">
+          <div class="tier-label tier-s"><span>S</span></div>
+          <div class="tier-label tier-a"><span>A</span></div>
+          <div class="tier-label tier-b"><span>B</span></div>
+          <div class="tier-label tier-c"><span>C</span></div>
+          <div class="tier-label tier-d"><span>D</span></div>
+        </div>
+        <div class="tier-cards">
+          <!-- Your other cards go here, one row per tier if you want -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+  .tierlist-rows {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 0;
+    align-items: stretch;
+    justify-content: flex-start;
+    position: relative;
+    left: -29px;
+    top: 28.5px;
+  }
+
+  .tier-labels {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 110px;
+    height: 100%;
+    justify-content: center;
+  }
+  .tier-labels .tier-label:first-child {
+    margin-top: 18px;
+  }
+
+  .tier-label {
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #fff;
+    box-shadow: 0 0 16px rgba(0,0,0,0.25);
+    margin-bottom: 0;
+    letter-spacing: 1px;
+    border: 2.5px solid #fff2;
+    text-shadow: 0 2px 8px #000a;
+    user-select: none;
+    margin-left: 0;
+    margin-right: 1.2rem;
+  }
+  
+  .tier-label.tier-s {
+    border-radius: 20px 0 0 0;
+  }
+  .tier-label.tier-d {
+    border-radius: 0 0 0 20px;
+  }
+  .tier-label.tier-a, .tier-label.tier-b, .tier-label.tier-c {
+    border-radius: 0;
+  }
+  @keyframes wavyGradient {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+  @keyframes moveLabelGradient {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 0%; }
+  }
+  .tier-label.tier-s, .tier-label.tier-a, .tier-label.tier-b, .tier-label.tier-c, .tier-label.tier-d {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .tier-label.tier-s::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #ff2222 0%, #851111 50%, #410202 100%);
+    background-size: 200% 100%;
+  animation: moveLabelGradient 3s linear infinite alternate;
+  }
+  .tier-label.tier-a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #a259ff 0%, #1a237e 100%);
+    background-size: 200% 100%;
+  animation: moveLabelGradient 3s linear infinite alternate;
+  }
+  .tier-label.tier-b::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #2374b6 0%, #00e5ff 100%);
+    background-size: 200% 100%;
+  animation: moveLabelGradient 3s linear infinite alternate;
+  }
+  .tier-label.tier-c::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #43ea4a 0%, #baffb8 100%);
+    background-size: 200% 100%;
+  animation: moveLabelGradient 3s linear infinite alternate;
+  }
+  .tier-label.tier-d::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #f7d725 0%, #ffd180 100%);
+    background-size: 200% 100%;
+  animation: moveLabelGradient 3s linear infinite alternate;
+  }
+  .tier-label.tier-s > span,
+  .tier-label.tier-a > span,
+  .tier-label.tier-b > span,
+  .tier-label.tier-c > span,
+  .tier-label.tier-d > span {
+    position: relative;
+    z-index: 1;
+  }
+  .tier-cards {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  margin-left: 0;
+  }
+  </style>
+  <script>
+    const btns = [
+      { btn: document.getElementById('btn-companions'), card: document.getElementById('tierlist-companions') },
+      { btn: document.getElementById('btn-auras'), card: document.getElementById('tierlist-auras') },
+      { btn: document.getElementById('btn-others'), card: document.getElementById('tierlist-others') }
+    ];
+    btns.forEach(({btn, card}, idx) => {
+      btn.addEventListener('click', () => {
+        btns.forEach(({btn, card}, i) => {
+          btn.classList.toggle('active', i === idx);
+          card.classList.toggle('active', i === idx);
+        });
+      });
+    });
+  </script>
+  <style>
+  .hamburger-menu {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    width: 54px;
+    height: 54px;
+    z-index: 20000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: #1c1c1c;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 3px solid #fff;
+    overflow: visible;
+    box-shadow: none;
+    transition: border-color 1.5s cubic-bezier(.4,1.6,.4,1), box-shadow 1.5s cubic-bezier(.4,1.6,.4,1), transform 0.2s;
+    /* Geen scale/transform op hover */
+  }
+  .hamburger-menu:hover {
+    border-color: #42e695;
+    box-shadow: 0 0 0 4px #42e69544, 0 0 18px #42e69588, 0 0 36px #42e69544;
+    transform: scale(1.12);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .hamburger-stripes {
+    width: 32px;
+    height: 28px;
+    padding-top: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    gap: 6px;
+  }
+  .hamburger-stripe {
+    width: 100%;
+    height: 5px;
+    padding-top: 6px;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow:
+      0 0 8px #42e695,
+      0 0 16px #7e22ce,
+      0 0 24px #42e695;
+    transition: box-shadow 0.2s;
+    margin: 0;
+  }
+  .side-navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 220px;
+    height: 100vh;
+    background: #18181f;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2.2rem 1.2rem 1.2rem 1.2rem;
+    z-index: 30000;
+    border-radius: 18px 0 0 18px;
+    box-shadow:
+      0 0 15px rgba(0,0,0,0.7),
+      0 0 30px rgba(255,110,196,0.3),
+      0 0 30px rgba(120,115,245,0.3),
+      0 0 30px rgba(66,230,149,0.3);
+    overflow: visible;
+    transform: translateX(110%);
+    transition: transform 0.35s cubic-bezier(.4,1.4,.6,1);
+    pointer-events: none;
+  }
+  .side-navbar.open::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 220px;
+    height: 100vh;
+    border-radius: 18px 0 0 18px;
+    background: #18181f;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .side-navbar.open {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  .side-nav-btn:hover {
+    background: linear-gradient(135deg, #7e22ce, #42e695);
+    color: #fff;
+    border-color: #42e695;
+    box-shadow: 0 0 0 4px #42e69544, 0 0 18px #42e69588, 0 0 36px #42e69544;
+    transform: scale(1.12);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  </style>
+  <div class="hamburger-menu" id="hamburgerMenu">
+    <div class="hamburger-stripes">
+      <div class="hamburger-stripe"></div>
+      <div class="hamburger-stripe"></div>
+      <div class="hamburger-stripe"></div>
+    </div>
+  </div>
+  <div class="side-navbar" id="sideNavbar">
+    <div class="side-navbar-title" style="font-size: 3rem; font-weight: bold; color: #fff !important; text-shadow: 0 0 15px #ff6ec4, 0 0 25px #7873f5, 0 0 35px #42e695; margin: 0 0 0.5rem 0; padding-top: 0.2rem; position: relative; z-index: 5;">Menu</div>
+    <div class="side-navbar-buttons" style="display: flex; flex-direction: column; font-size: 3rem; gap: 1.1rem; width: 100%;">
+      <button class="btn side-nav-btn" id="btn-calculators">Calculators</button>
+      <button class="btn side-nav-btn" id="btn-tierlist">Tier Lists</button>
+    </div>
+  </div>
+  <script>
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const sideNavbar = document.getElementById('sideNavbar');
+    let navOpen = false;
+    hamburgerMenu.addEventListener('click', function(e) {
+      navOpen = !navOpen;
+      sideNavbar.classList.toggle('open', navOpen);
+    });
+    document.addEventListener('mousedown', function(e) {
+      if (navOpen && !sideNavbar.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+        navOpen = false;
+        sideNavbar.classList.remove('open');
+      }
+    });
+    document.getElementById('btn-calculators').onclick = function() {
+      window.location.href = 'index.html';
+    };
+    document.getElementById('btn-tierlist').onclick = function() {
+      window.location.href = 'tierlist.html';
+    };
+  </script>
+</body>
+</html>
